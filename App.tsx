@@ -1,16 +1,16 @@
 
-import React, { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import ProductGrid from './components/ProductGrid';
-import ForgeAssistant from './components/ForgeAssistant';
-import Footer from './components/Footer';
+import React, { useState } from 'react';
+import Navbar from './components/Navbar.tsx';
+import Hero from './components/Hero.tsx';
+import ProductGrid from './components/ProductGrid.tsx';
+import ForgeAssistant from './components/ForgeAssistant.tsx';
+import Footer from './components/Footer.tsx';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'home' | 'collection' | 'forge'>('home');
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#050505]">
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       
       <main className="flex-grow">

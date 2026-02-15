@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { getSwordAdvice } from '../services/geminiService';
-import { ChatMessage } from '../types';
+import { getSwordAdvice } from '../services/geminiService.ts';
+import { ChatMessage } from '../types.ts';
 
 const ForgeAssistant: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -27,10 +27,15 @@ const ForgeAssistant: React.FC = () => {
     setInput('');
     setIsLoading(true);
 
-    const response = await getSwordAdvice(input);
-    const modelMsg: ChatMessage = { role: 'model', text: response || '' };
-    setMessages(prev => [...prev, modelMsg]);
-    setIsLoading(false);
+    try {
+      const response = await getSwordAdvice(input);
+      const modelMsg: ChatMessage = { role: 'model', text: response || '' };
+      setMessages(prev => [...prev, modelMsg]);
+    } catch (e) {
+      setMessages(prev => [...prev, { role: 'model', text: 'The forge flared up unexpectedly. Try again, traveler.' }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -79,7 +84,7 @@ const ForgeAssistant: React.FC = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Tell me about your quest, or ask for a sword recommendation..."
-            className="flex-grow bg-black border border-white/10 rounded-sm px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+            className="flex-grow bg-black border border-white/10 rounded-sm px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-white"
           />
           <button 
             onClick={handleSend}
